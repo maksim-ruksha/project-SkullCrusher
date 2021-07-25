@@ -35,6 +35,7 @@ namespace Character
 
         [Header("Gravity")] public float gravityMultiplier = 10;
         [Header("Crouch")] public float crouchColliderHeight = 0.5f;
+        public float crouchMoveSpeed = 3.0f;
         public float crouchSpeedMultiplier = 1.0f;
         public Vector3 crouchCameraCenter = new Vector3(0.0f, 0.25f, 0.0f);
         public Vector3 ceilingSphereCenter;
@@ -120,7 +121,8 @@ namespace Character
                 if (isWalkableGround)
                 {
                     // Acceleration(accelerateDirection, isCrouching ? moveSpeed * 0.25f : moveSpeed);
-                    Acceleration(accelerateDirection, moveSpeed);
+                    // Acceleration(accelerateDirection, moveSpeed);
+                    Acceleration(accelerateDirection, isCrouching ? crouchMoveSpeed : moveSpeed);
                     velocity = Vector3.ProjectOnPlane(velocity, groundNormal);
 
                     if (isGroundedInPreviousFrame && !inputManager.isJumpPressed)

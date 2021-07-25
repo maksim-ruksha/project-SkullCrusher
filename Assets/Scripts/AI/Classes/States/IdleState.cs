@@ -35,6 +35,12 @@ namespace AI.Classes.States
             }
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (IdleStateConfig) config;
+            contactStateConfig = bot.config.contactStateConfig;
+        }
+
         public override void Update()
         {
             switch (stateConfig.type)

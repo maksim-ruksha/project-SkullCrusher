@@ -15,7 +15,12 @@ namespace AI.Classes.States
             name = ContactState;
             stateConfig = (ContactStateConfig) config;
         }
-        
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (ContactStateConfig) config;
+        }
+
         public override void Update()
         {
             bot.controller.LookAt(player.position);

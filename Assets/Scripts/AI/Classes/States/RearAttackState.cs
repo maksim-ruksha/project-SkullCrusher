@@ -12,6 +12,12 @@ namespace AI.Classes.States
             name = RearAttackState;
             stateConfig = (RearAttackStateConfig) config;
         }
+
+        public override void Transit(AiStateConfig config)
+        {
+            stateConfig = (RearAttackStateConfig) config;
+        }
+
         public override void Update()
         {
             throw new System.NotImplementedException();

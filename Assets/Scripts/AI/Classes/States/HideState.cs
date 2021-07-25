@@ -13,7 +13,12 @@ namespace AI.Classes.States
             name = HideState;
             stateConfig = (HideStateConfig) config;
         }
-        
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HideStateConfig) config;
+        }
+
         public override void Update()
         {
             throw new System.NotImplementedException();

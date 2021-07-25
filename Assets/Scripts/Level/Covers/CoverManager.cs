@@ -103,6 +103,12 @@ namespace Level.Covers
 
         public List<Cover> GetNearestClusterList(Vector3 position)
         {
+            if (efficientCoverList == null)
+            {
+                SerializableCoverList loadedCovers = LoadCoversAsBinary();
+                if (loadedCovers != null)
+                    ApplySerializableCoverList(loadedCovers);
+            }
             return efficientCoverList[GetNearestCluster(position)];
         }
 

@@ -13,7 +13,12 @@ namespace AI.Classes.States
             name = ChaseState;
             stateConfig = (ChaseStateConfig) config;
         }
-        
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (ChaseStateConfig) config;
+        }
+
         public override void Update()
         {
             bot.controller.GoTo(bot.GetPlayerLastPosition() + bot.GetPlayerLastVelocity());

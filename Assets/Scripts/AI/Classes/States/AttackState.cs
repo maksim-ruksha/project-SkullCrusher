@@ -14,6 +14,11 @@ namespace AI.Classes.States
             stateConfig = (AttackStateConfig) config;
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (AttackStateConfig) config;
+        }
+
         public override void Update()
         {
             Vector3 playerPosition = player.position;

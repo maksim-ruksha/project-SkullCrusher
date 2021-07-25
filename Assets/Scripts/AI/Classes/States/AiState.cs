@@ -30,6 +30,9 @@ namespace AI.Classes.States
             this.bot = bot;
             this.player = player;
         }
+
+        // good place to init shit
+        public abstract void Transit(AiStateConfig newConfig);
         
         public abstract void Update();
         

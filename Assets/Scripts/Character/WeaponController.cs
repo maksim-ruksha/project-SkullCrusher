@@ -11,6 +11,10 @@ namespace Character
     {
         public Controller controller;
 
+
+        public float sightPositionFollowSpeed = 10.0f;
+        public float sightRotationFollowSpeed = 20.0f;
+
         public float weaponCastDistance = 1000.0f;
         public LayerMask weaponCastMask;
 
@@ -45,6 +49,17 @@ namespace Character
             WeaponsFireUpdate();
             MainWeaponStateUpdate();
             SecondaryWeaponUpdate();
+            
+            
+        }
+
+        private void LateUpdate()
+        {
+            // sits here because in Update causes twitching
+            /*
+            SightFollowUpdate(mainWeapon, true);
+            SightFollowUpdate(secondaryWeapon, false);
+            */
         }
 
         private void MainWeaponStateUpdate()
@@ -94,6 +109,7 @@ namespace Character
             }
         }
 
+
         private void WeaponsFireUpdate()
         {
             if (inputManager.isFire1Pressed)
@@ -115,6 +131,27 @@ namespace Character
                 }
             }
         }
+
+        private void SightFollowUpdate(Weapon weapon, bool isMain)
+        {
+            if (weapon)
+            {
+                Vector3 targetPosition = controller.cameraTransform.position
+                                         + controller.cameraTransform.forward * weapon.cameraOffsetToRight.z
+                                         + controller.cameraTransform.right * weapon.cameraOffsetToRight.x
+                                         + controller.cameraTransform.up * weapon.cameraOffsetToRight.y;
+
+                Quaternion targetRotation = controller.cameraTransform.rotation;
+
+                /*weapon.transform.position = Vector3.Slerp(weapon.transform.position, targetPosition,
+                    Time.deltaTime * sightPositionFollowSpeed);*/
+                //weapon.transform.position = targetPosition;
+                //weapon.transform.rotation = controller.cameraTransform.rotation;
+                weapon.transform.rotation = Quaternion.Slerp(weapon.transform.rotation, targetRotation,
+                    Time.deltaTime * sightRotationFollowSpeed);
+            }
+        }
+
 
         private bool TryGetVisionPoint(Transform head, out Vector3 visionPoint)
         {
@@ -237,7 +274,7 @@ namespace Character
         {
             if (weapon == null)
                 return false;
-            
+
             for (int i = 0; i < Settings.Config.weaponSlotsCount; i++)
             {
                 if (weapons[i] != null && weapons[i].Equals(weapon))

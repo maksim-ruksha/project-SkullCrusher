@@ -127,6 +127,16 @@ namespace AI
             return position;
         }
 
+        public Vector3 GetTargetMovePosition()
+        {
+            return targetMovePosition;
+        }
+        
+        public Vector3 GetTargetLookPosition()
+        {
+            return targetLookPosition;
+        }
+
         public bool IsLookingAtTarget()
         {
             return (transform.forward - (targetLookPosition - transform.position)).sqrMagnitude < 0.01f;
@@ -197,7 +207,23 @@ namespace AI
             return (visionDistance - playerDelta.magnitude) / visionDistance;
         }
 
-        private float GetVisibilityOfPoint(Vector3 point)
+
+        public float GetPotentialVisibilityOfPoint(Vector3 point)
+        {
+            Vector3 pointDelta = (point - headTransform.position);
+            Ray ray = new Ray(headTransform.position, pointDelta);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, visionDistance, visibleObjectsMask))
+            {
+                float hitDistance = (hit.point - headTransform.position).magnitude;
+                float pointDistance = pointDelta.magnitude;
+                if (hitDistance > pointDistance)
+                    return 1;
+            }
+
+            return 0;
+        }
+        public float GetVisibilityOfPoint(Vector3 point)
         {
             Vector3 pointDelta = (point - headTransform.position);
             float angle = Vector3.Angle(pointDelta.normalized, headTransform.forward);

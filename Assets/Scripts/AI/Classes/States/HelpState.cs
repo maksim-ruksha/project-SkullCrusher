@@ -12,7 +12,12 @@ namespace AI.Classes.States
             name = HelpState;
             stateConfig = (HelpStateConfig) config;
         }
-        
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HelpStateConfig) config;
+        }
+
         public override void Update()
         {
             throw new System.NotImplementedException();

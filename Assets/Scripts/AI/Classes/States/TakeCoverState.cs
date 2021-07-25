@@ -21,10 +21,15 @@ namespace AI.Classes.States
         {
             name = TakeCoverState;
             stateConfig = (TakeCoverStateConfig) config;
+            
             GameObject globalController = GameObject.Find(Settings.GameObjects.GlobalController);
             coverManager = globalController.GetComponent<CoverManager>();
+        }
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (TakeCoverStateConfig) config;
             takingCoverForReloading = bot.IsNeedToStartSeekingCover();
-            
         }
 
         public override void Update()

@@ -12,7 +12,8 @@ namespace Debug
 
         public CoverManager coverManager;
         public int limiter = 50;
-        [Range(0, 90)] public float maxAngleDifference = 75.0f;
+        [Range(0, 90)] public float fieldOfViewToCheck = 75.0f;
+        [Range(0, 90)] public float coverDirectionMaxAngleDifference = 30.0f;
         public float maxCoverDistance = 200.0f;
         
         private List<Vector3> GetCoverListToCheck(Vector3 position, Vector3 direction, int limiter, float maxDistance)
@@ -28,10 +29,11 @@ namespace Debug
             for (int i = 0; i < Mathf.Min(nearestCluster.Count, limiter); i++)
             {
                 Vector3 coverPosition = nearestCluster[i].position;
-                Vector3 coverDirection = (nearestCluster[i].position - position).normalized;
+                Vector3 coverDirection = nearestCluster[i].direction;
+                Vector3 directionToCover = (nearestCluster[i].position - position).normalized;
                 Vector3 delta = coverPosition - position;
-                if (Vector3.Angle(direction, coverDirection) <= 
-                    maxAngleDifference && delta.sqrMagnitude <= maxDistance)
+                if (Vector3.Angle(direction, directionToCover) <= 
+                    fieldOfViewToCheck && delta.sqrMagnitude <= maxDistance && Vector3.Angle(coverDirection, -direction) < coverDirectionMaxAngleDifference)
                 {
                     result.Add(coverPosition);
                 }
