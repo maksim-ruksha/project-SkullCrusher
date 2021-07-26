@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AI.Classes.States.Configs;
 using Level.Covers;
 using Level.Covers.Classes;
+using Preferences;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,8 +15,6 @@ namespace AI.Classes.States
         private SearchStateConfig stateConfig;
         private CoverManager coverManager;
         private Random random;
-
-        private float sqrNearestPositionLowBound;
 
         private List<Vector3> positionsToCheck;
 
@@ -29,6 +28,9 @@ namespace AI.Classes.States
             name = SearchState;
             stateConfig = (SearchStateConfig) config;
             random = new Random(config.GetHashCode() + bot.config.GetHashCode());
+            
+            GameObject globalController = GameObject.Find(Settings.GameObjects.GlobalController);
+            coverManager = globalController.GetComponent<CoverManager>();
         }
 
         public override void Transit(AiStateConfig newConfig)
@@ -44,10 +46,47 @@ namespace AI.Classes.States
 
         public override void Update()
         {
-            CheckCoverUpdate();
-            /*if (currentWaitTime <= 0)
+            if (currentWaitTime > 0)
             {
-            }*/
+                currentWaitTime -= Time.deltaTime;
+                if (currentWaitTime <= 0)
+                {
+                    // done with checking this position, go to next
+                    if (positionsToCheck.Count > 0)
+                    {
+                        Vector3 point = GetNearestPosition(positionsToCheck);
+                        positionsToCheck.Remove(point);
+                        CheckCover(point); 
+                    }
+                }
+            }
+            
+            if (currentLookAroundTime > 0)
+            {
+                currentLookAroundTime -= Time.deltaTime;
+                if (currentLookAroundTime <= 0)
+                {
+                    Vector3 direction = bot.controller.headTransform.forward;
+                    Vector3 randomizedDirection = RandomizeDirection(direction, stateConfig.lookAroundRange);
+                    bot.controller.LookAtDirection(randomizedDirection);
+                }
+            }
+
+            // arrived at position
+            
+            if (bot.controller.GetPotentialVisibilityOfPoint(currentCheckingPosition) > 0.5f)
+            {
+                bot.controller.LookAt(currentCheckingPosition);
+                
+                currentWaitTime = stateConfig.pointCheckWaitTime;
+                currentLookAroundTime = stateConfig.pointLookAroundInterval;
+            }
+            
+            if (bot.controller.IsArrivedAtTargetPosition())
+            {
+                currentWaitTime = stateConfig.pointCheckWaitTime;
+                currentLookAroundTime = stateConfig.pointLookAroundInterval;
+            }
         }
 
         public override string TransitionCheck()
@@ -73,40 +112,6 @@ namespace AI.Classes.States
             bot.controller.GoTo(currentCheckingPosition);
         }
 
-        private void CheckCoverUpdate()
-        {
-            if (currentWaitTime > 0)
-            {
-                currentWaitTime -= Time.deltaTime;
-                if (currentWaitTime <= 0)
-                {
-                    // done with checking this position, go to next
-                    if (positionsToCheck.Count > 0)
-                    {
-                        Vector3 point = GetNearestPosition(positionsToCheck);
-                        positionsToCheck.Remove(point);
-                        CheckCover(point); 
-                    }
-                }
-            }
-
-            if (currentLookAroundTime > 0)
-            {
-                currentLookAroundTime -= Time.deltaTime;
-                if (currentLookAroundTime <= 0)
-                {
-                    Vector3 direction = bot.controller.headTransform.forward;
-                    Vector3 randomizedDirection = RandomizeDirection(direction, stateConfig.lookAroundRange);
-                    bot.controller.LookAtDirection(randomizedDirection);
-                }
-            }
-
-            if (bot.controller.IsArrivedAtTargetPosition())
-            {
-                currentWaitTime = stateConfig.pointCheckWaitTime;
-                currentLookAroundTime = stateConfig.pointLookAroundInterval;
-            }
-        }
 
         private Vector3 GetNearestPosition(List<Vector3> positions)
         {

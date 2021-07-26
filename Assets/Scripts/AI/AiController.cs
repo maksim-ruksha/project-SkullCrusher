@@ -210,7 +210,7 @@ namespace AI
 
         public float GetPotentialVisibilityOfPoint(Vector3 point)
         {
-            Vector3 pointDelta = (point - headTransform.position);
+            Vector3 pointDelta = point - headTransform.position;
             Ray ray = new Ray(headTransform.position, pointDelta);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, visionDistance, visibleObjectsMask))
@@ -223,6 +223,8 @@ namespace AI
 
             return 0;
         }
+        
+        
         public float GetVisibilityOfPoint(Vector3 point)
         {
             Vector3 pointDelta = (point - headTransform.position);

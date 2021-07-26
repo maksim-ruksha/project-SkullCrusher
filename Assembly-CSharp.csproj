@@ -54,7 +54,6 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AI\Classes\States\Configs\AiStateConfig.cs" />
      <Compile Include="Assets\Scripts\IK\IK.cs" />
-     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
      <Compile Include="Assets\Scripts\Level\Covers\Debug\LineTest.cs" />
      <Compile Include="Assets\Scripts\SingleInstance\BulletManager.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\Configs\AttackStateConfig.cs" />
@@ -69,11 +68,8 @@
      <Compile Include="Assets\Scripts\AI\Classes\States\ContactState.cs" />
      <Compile Include="Assets\Scripts\Debug\EscapeHidePointer.cs" />
      <Compile Include="Assets\Scripts\AI\Enums\IdleStateType.cs" />
-     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\ChaseState.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\Configs\ContactStateConfig.cs" />
-     <Compile Include="Assets\SampleScenes\Scripts\LevelReset.cs" />
-     <Compile Include="Assets\SampleScenes\Menu\Scripts\SceneAndURLLoader.cs" />
      <Compile Include="Assets\Scripts\AI\Scriptables\AiBotConfig.cs" />
      <Compile Include="Assets\Scripts\AI\Enums\AiBotGroupRole.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
@@ -107,19 +103,15 @@
      <Compile Include="Assets\Scripts\Level\Covers\Classes\Util\SerializableCoverList.cs" />
      <Compile Include="Assets\Scripts\UI\HealthText.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\Configs\SearchStateConfig.cs" />
-     <Compile Include="Assets\SampleScenes\Menu\Scripts\PauseMenu.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\Groups\GroupRoles\Configs\TankRoleConfig.cs" />
      <Compile Include="Assets\Scripts\Weapons\Enums\ShutterState.cs" />
      <Compile Include="Assets\Scripts\Debug\DamagePoint.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\Groups\GroupRoles\Configs\TankSupporterRoleConfig.cs" />
-     <Compile Include="Assets\SampleScenes\Scripts\CameraSwitch.cs" />
      <Compile Include="Assets\Scripts\SingleInstance\InputManager.cs" />
      <Compile Include="Assets\Scripts\Weapons\Classes\ShutterParameters.cs" />
      <Compile Include="Assets\Scripts\Damages\Classes\Damage.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\Configs\TakeCoverStateConfig.cs" />
      <Compile Include="Assets\Scripts\Level\Covers\Classes\CoverClusterMaker.cs" />
-     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
-     <Compile Include="Assets\SampleScenes\Menu\Scripts\MenuSceneLoader.cs" />
      <Compile Include="Assets\Scripts\AI\Classes\States\RearAttackState.cs" />
      <Compile Include="Assets\Scripts\Level\Covers\Debug\ClusterTest.cs" />
      <Compile Include="Assets\Scripts\Weapons\Ammo.cs" />
@@ -157,7 +149,6 @@
      <None Include="Assets\Shaders\Violence\ViolenceableMultimasked.shader" />
      <None Include="Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Shaders\Violence\AdditiveMaskBlend.shader" />
-     <None Include="Assets\SampleScenes\Shaders\Skybox-Procedural.shader" />
      <None Include="Assets\Shaders\PostProcessing\ArtifactImageEffect.shader" />
      <None Include="Assets\Shaders\Violence\AddMask.shader" />
      <None Include="Assets\Scripts\Level\readme.txt" />
@@ -786,10 +777,6 @@
  </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{ab3658b8-2da6-e371-32b4-a8b0d10f774e}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

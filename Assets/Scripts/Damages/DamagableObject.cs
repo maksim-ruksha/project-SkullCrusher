@@ -8,6 +8,7 @@ namespace Damages
 {
     public class DamageableObject : MonoBehaviour
     {
+        public float maxHealth = 100.0f;
         public float health = 100.0f;
         public DamageableGroup defaultDamageableGroup;
 
@@ -22,6 +23,8 @@ namespace Damages
         // like CUv4's ignition and explosion from laser
         public DamageEvent onDamageTookDamageEvent;
         public DamageEvent onDiedDamageEvent;
+
+        private float initialHealth;
         
         private List<DamageableObjectPart> parts;
 
@@ -67,6 +70,16 @@ namespace Damages
         public float GetRawHealth()
         {
             return health;
+        }
+
+        public int GetMaxHealth()
+        {
+            return (int) Math.Round(maxHealth + 0.4f);
+        }
+
+        public float GetRawMaxHealth()
+        {
+            return initialHealth;
         }
 
         private void AssignParts(Transform t)

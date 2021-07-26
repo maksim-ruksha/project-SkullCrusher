@@ -11,19 +11,19 @@ using Weapons;
 namespace AI
 {
     [RequireComponent(typeof(AiController))]
-    public class AiBot: MonoBehaviour
+    public class AiBot : MonoBehaviour
     {
         public AiBotConfig config;
         public AiBotState initialState;
         public Weapon initialWeapon;
-        
+
         public AiBotGroupRole groupRole;
         public AiController controller;
-        
+
         private AiManager aiManager;
         private AiGroup group;
         private AiState state;
-        
+
         private Transform playerTransform;
         private Controller playerController;
         private DamageableObject damageableObject;
@@ -31,7 +31,7 @@ namespace AI
 
         private Vector3 lastPlayerPosition;
         private Vector3 lastPlayerVelocity;
-        
+
         private void Awake()
         {
             controller = GetComponent<AiController>();
@@ -43,7 +43,7 @@ namespace AI
 
             aiManager = globalController.GetComponent<AiManager>();
             controller = GetComponent<AiController>();
-            
+
             playerController = playerTransform.GetComponent<Controller>();
             if (initialWeapon)
                 EquipWeapon(initialWeapon);
@@ -67,12 +67,13 @@ namespace AI
         {
             // TODO: implement EquipWeapon()
         }
-        
+
         /*
          * =================================================
          * ================ SHIT FOR STATES ================
          * =================================================
          */
+        
         public void Fire()
         {
             // TODO: implement Fire()
@@ -90,7 +91,8 @@ namespace AI
 
         public bool IsNeedToStartSeekingCover()
         {
-            return (float)equippedWeapon.currentClipAmmoAmount / equippedWeapon.weaponParameters.clipAmmoAmount <= config.predictTakingCoverClipAmmoMultiplier;
+            return (float) equippedWeapon.currentClipAmmoAmount / equippedWeapon.weaponParameters.clipAmmoAmount <=
+                   config.predictTakingCoverClipAmmoMultiplier;
         }
 
         public bool IsNeedToReload()
@@ -104,6 +106,11 @@ namespace AI
             lastPlayerVelocity = playerController.GetVelocity();
         }
 
+        public float GetRangedHealth()
+        {
+            return damageableObject.GetRawHealth() / damageableObject.GetRawMaxHealth();
+        }
+
         public Vector3 GetPlayerLastPosition()
         {
             return lastPlayerPosition;
@@ -113,6 +120,5 @@ namespace AI
         {
             return lastPlayerVelocity;
         }
-        
     }
 }

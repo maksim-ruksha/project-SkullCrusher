@@ -6,7 +6,7 @@ namespace AI.Classes.States
     public class HelpState: AiState
     {
         private HelpStateConfig stateConfig;
-
+        // TODO: implement HelpState if needed
         public HelpState(AiStateConfig config, AiBot bot, Transform player): base(config, bot, player)
         {
             name = HelpState;
