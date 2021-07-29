@@ -33,7 +33,7 @@ namespace AI.Classes.States
         {
             if (bot.controller.IsArrivedAtTargetPosition())
             {
-               // TODO: call group help and wait, else keep escaping while attacking
+               // TODO: call group help and wait, else self heal, else keep escaping while attacking
             }
         }
 

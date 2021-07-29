@@ -2,6 +2,7 @@
 using Preferences;
 using SingleInstance;
 using UnityEngine;
+using Util;
 using Weapons;
 
 namespace Character
@@ -9,10 +10,16 @@ namespace Character
     [RequireComponent(typeof(Controller))]
     public class WeaponController : MonoBehaviour
     {
+        public bool needPush = false;
+
         public Controller controller;
 
-
-        public float sightPositionFollowSpeed = 10.0f;
+        public float sightPositionFollowAccelerationSpeed = 10.0f;
+        public float sightFollowMaxOffset = 0.5f;
+        public float sightPositionFollowDecelerationSpeed = 10.0f;
+        public float moveImpact = 1.0f;
+        public int decPow = 15;
+        public float sightPositionMaxDelta = 0.25f;
         public float sightRotationFollowSpeed = 20.0f;
 
         public float weaponCastDistance = 1000.0f;
@@ -34,6 +41,9 @@ namespace Character
         private float currentHideWhileChangingTime;
         private float currentDroppingTime;
 
+        private Vector3 previousTargetPosition;
+        private Vector3 currentDelta;
+        private Vector3 offset;
 
         private void Start()
         {
@@ -49,18 +59,10 @@ namespace Character
             WeaponsFireUpdate();
             MainWeaponStateUpdate();
             SecondaryWeaponUpdate();
-            
-            
-        }
-
-        private void LateUpdate()
-        {
-            // sits here because in Update causes twitching
-            /*
             SightFollowUpdate(mainWeapon, true);
             SightFollowUpdate(secondaryWeapon, false);
-            */
         }
+
 
         private void MainWeaponStateUpdate()
         {
@@ -132,24 +134,69 @@ namespace Character
             }
         }
 
+        // some juicy weapon animations
         private void SightFollowUpdate(Weapon weapon, bool isMain)
         {
             if (weapon)
             {
-                Vector3 targetPosition = controller.cameraTransform.position
-                                         + controller.cameraTransform.forward * weapon.cameraOffsetToRight.z
-                                         + controller.cameraTransform.right * weapon.cameraOffsetToRight.x
-                                         + controller.cameraTransform.up * weapon.cameraOffsetToRight.y;
+                Quaternion r = controller.GetRealRotation();
+                
+                Vector3 targetPosition = controller.cameraTransform.TransformPoint(weapon.cameraOffsetToRight) - controller.cameraTransform.position;
+                Vector3 moveDelta = controller.GetVelocity() / controller.moveSpeed /** inputManager.move.magnitude*/;
+                Vector3 delta = targetPosition - previousTargetPosition + moveDelta * moveImpact;
+                delta = delta.normalized * Mathf.Min(sightFollowMaxOffset, delta.magnitude);
 
+                // Vector3 delta = inputManager.look * Time.deltaTime;
+
+                Vector3 localDelta = controller.cameraTransform.InverseTransformDirection(delta);
+                localDelta = localDelta.normalized * Mathf.Min(sightFollowMaxOffset, localDelta.magnitude);
+
+                currentDelta = Vector3.Lerp(currentDelta, localDelta,
+                    Time.deltaTime * sightPositionFollowDecelerationSpeed);
+                
+                offset = Vector3.Lerp(offset, weapon.cameraOffsetToRight - currentDelta, Time.deltaTime * sightPositionFollowAccelerationSpeed);
+                //offset = weapon.cameraOffsetToRight - currentDelta;
+                
                 Quaternion targetRotation = controller.cameraTransform.rotation;
+                weapon.transform.rotation = targetRotation;
+                weapon.transform.localPosition = offset;
 
-                /*weapon.transform.position = Vector3.Slerp(weapon.transform.position, targetPosition,
-                    Time.deltaTime * sightPositionFollowSpeed);*/
-                //weapon.transform.position = targetPosition;
-                //weapon.transform.rotation = controller.cameraTransform.rotation;
-                weapon.transform.rotation = Quaternion.Slerp(weapon.transform.rotation, targetRotation,
-                    Time.deltaTime * sightRotationFollowSpeed);
+                previousTargetPosition = targetPosition;
+
+                //weapon.transform.position += controller.GetVelocity() * Time.deltaTime + direction * (Time.deltaTime * sightPositionFollowDecelerationSpeed);
+                /*offset = Vector3.Lerp(offset, controller.GetVelocity().normalized,
+                    Time.deltaTime * sightPositionFollowAccelerationSpeed) + direction * Time.deltaTime;*/
+                //Vector3 rotDelta = position - weapon.transform.position;
+                /*offset = Vector3.Lerp(offset, direction.normalized,
+                    Time.deltaTime * sightPositionFollowAccelerationSpeed);
+                // + direction * Time.deltaTime;
+                
+                deltaOffset = Vector3.Lerp(deltaOffset, positionDirection,
+                    Time.deltaTime * sightPositionFollowDecelerationSpeed);// + offset * Time.deltaTime;
+                
+                if (deltaOffset.magnitude > sightFollowMaxOffset)
+                    deltaOffset = deltaOffset.normalized;
+                
+                weapon.transform.rotation = targetRotation;
+                
+                if (direction.magnitude > sightFollowMaxOffset)
+                    direction = direction.normalized * sightFollowMaxOffset;
+                
+                weapon.transform.position = targetPosition - deltaOffset * sightFollowMaxOffset;*/
+                /*weapon.transform.position = weapon.transform.position +
+                                            positionDirection *
+                                            (Time.deltaTime * sightPositionFollowDecelerationSpeed) +
+                                            controller.GetVelocity() * (Time.deltaTime *
+                                                                        (positionDirection.magnitude));*/
+
+                /*weapon.transform.localPosition = Vector3.Lerp(weapon.cameraOffsetToRight - localDirection,
+                    weapon.cameraOffsetToRight, Time.deltaTime * sightPositionFollowAccelerationSpeed);*/
             }
+        }
+
+        private bool FixOutOfRangeWeapon(Weapon weapon, Vector3 targetPosition)
+        {
+            throw new NotImplementedException();
         }
 
 

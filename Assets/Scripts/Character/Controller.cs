@@ -42,6 +42,8 @@ namespace Character
         public float ceilingSphereRadius = 0.5f;
         public float ceilingSphereCastDistance = 0.1f;
         [Header("Look")] public float sensitivity = 10.0f;
+        public bool interpolateLook = true;
+        public float interpolationSpeed = 50.0f;
         public bool invertX;
         public bool invertY;
         [Range(0, 90)] public float upAngleLimit = 90;
@@ -72,28 +74,36 @@ namespace Character
         //private bool wasCrouchingBeforeJump;
 
         private float initialColliderHeight;
-        
+
         private Vector3 initialCameraPosition;
 
         private Rigidbody rigidbody;
 
         private CapsuleCollider collider;
 
-        void Start()
+        // in a perfect world
+        // values like this would not exist
+        // but this is not a perfect world
+        private float lastDeltaTime = 1.0f;
+        // interpolateLook = true
+        private Quaternion realRotation;
+        
+
+        private void Start()
         {
             inputManager = GameObject.Find(Settings.GameObjects.GlobalController).GetComponent<InputManager>();
 
             rigidbody = GetComponent<Rigidbody>();
             collider = GetComponent<CapsuleCollider>();
 
-            
+
             initialColliderHeight = collider.height;
             initialCameraPosition = cameraTransform.localPosition;
 
             Gravity.Set(Physics.gravity.normalized);
         }
 
-        void Update()
+        private void Update()
         {
             Control();
         }
@@ -103,8 +113,12 @@ namespace Character
         {
             velocity = rigidbody.velocity;
             MoveControl(inputManager.move);
+            /*velocity = inputManager.move * moveSpeed;
+            rigidbody.velocity = velocity;*/
             LookControl(inputManager.look);
             CrouchControl(inputManager.isCrouchPressed);
+            lastDeltaTime = Time.deltaTime;
+            print(velocity.magnitude);
         }
 
         private void MoveControl(Vector3 input)
@@ -229,16 +243,22 @@ namespace Character
                 input.y *= -1;
             if (invertX)
                 input.x *= -1;
-            input = (new Vector3(input.y, input.x)) * sensitivity;
+            input = new Vector3(input.y, input.x) * sensitivity;
 
-            Vector3 instantRotation = cameraTransform.rotation.eulerAngles;
+            Vector3 instantRotation = realRotation.eulerAngles;
             instantRotation += input;
             if (instantRotation.x > 180)
                 instantRotation.x -= 360;
 
             instantRotation.x = Mathf.Clamp(instantRotation.x, downAngleLimit, upAngleLimit);
 
-            cameraTransform.rotation = Quaternion.Euler(instantRotation);
+            realRotation = Quaternion.Euler(instantRotation);
+
+            if (interpolateLook)
+                cameraTransform.rotation = Quaternion.Lerp(cameraTransform.rotation, realRotation,
+                    Time.deltaTime * interpolationSpeed);
+            else
+                cameraTransform.rotation = realRotation;
         }
 
         private void CrouchControl(bool input)
@@ -380,6 +400,11 @@ namespace Character
             return velocity;
         }
 
+        public Quaternion GetRealRotation()
+        {
+            return realRotation;
+        }
+
         public Vector3 GetLookPoint(LayerMask mask, float distance)
         {
             Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
@@ -392,7 +417,6 @@ namespace Character
 
             return cameraTransform.position + cameraTransform.forward * distance;
         }
-        
 
 
         private void OnDrawGizmos()
