@@ -18,19 +18,19 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 2
+    value: 2.2
   threshold:
     overrideState: 1
-    value: 1
+    value: 1.15
   softKnee:
     overrideState: 1
     value: 0.5
   clamp:
     overrideState: 1
-    value: 65472
+    value: 2
   diffusion:
     overrideState: 1
-    value: 7
+    value: 9.97
   anamorphicRatio:
     overrideState: 1
     value: 0
@@ -39,13 +39,13 @@ MonoBehaviour:
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
     overrideState: 1
-    value: 0
+    value: 1
   dirtTexture:
-    overrideState: 1
+    overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
+    overrideState: 0
     value: 0
 --- !u!114 &-8522331479277811471
 MonoBehaviour:
@@ -65,16 +65,16 @@ MonoBehaviour:
     value: 1
   filtering:
     overrideState: 1
-    value: {x: 91.40329, y: 99}
+    value: {x: 1, y: 99.00001}
   minLuminance:
     overrideState: 1
-    value: -9
+    value: -1
   maxLuminance:
     overrideState: 1
-    value: 9
+    value: 1
   keyValue:
     overrideState: 1
-    value: 1
+    value: 0.35
   eyeAdaptation:
     overrideState: 1
     value: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
     value: 2
   speedDown:
     overrideState: 1
-    value: 1
+    value: 2
 --- !u!114 &-8116875264407679237
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
+    value: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
@@ -114,7 +114,7 @@ MonoBehaviour:
     value: 0.312
   smoothness:
     overrideState: 1
-    value: 0.434
+    value: 1
   roundness:
     overrideState: 1
     value: 1
@@ -126,6 +126,34 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   opacity:
+    overrideState: 1
+    value: 1
+--- !u!114 &-7584127598503324544
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
+  m_Name: Grain
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  colored:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 0.228
+  size:
+    overrideState: 1
+    value: 0.3
+  lumContrib:
     overrideState: 1
     value: 1
 --- !u!114 &-3389641405538864689
@@ -150,10 +178,10 @@ MonoBehaviour:
     defaultState: 1
   intensity:
     overrideState: 1
-    value: 0.1
+    value: 0.05
   fastMode:
     overrideState: 1
-    value: 0
+    value: 1
 --- !u!114 &-3282221040609370477
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -166,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -207,6 +235,7 @@ MonoBehaviour:
   - {fileID: -8116875264407679237}
   - {fileID: -8522331479277811471}
   - {fileID: 31930600975037251}
+  - {fileID: -7584127598503324544}
 --- !u!114 &31930600975037251
 MonoBehaviour:
   m_ObjectHideFlags: 3
