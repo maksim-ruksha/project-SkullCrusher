@@ -10,11 +10,12 @@ using Weapons;
 
 namespace AI
 {
+    [RequireComponent(typeof(DamageableObject))]
+    [RequireComponent(typeof(ViolenceableObject))]
     [RequireComponent(typeof(AiController))]
     public class AiBot: MonoBehaviour
     {
         public AiBotConfig config;
-        public AiBotState initialState;
         public Weapon initialWeapon;
         
         public AiBotGroupRole groupRole;
@@ -22,11 +23,12 @@ namespace AI
         
         private AiManager aiManager;
         private AiGroup group;
-        private AiState state;
         
         private Transform playerTransform;
         private Controller playerController;
+        
         private DamageableObject damageableObject;
+        private ViolenceableObject violenceableObject;
         private Weapon equippedWeapon;
 
         private Vector3 lastPlayerPosition;
@@ -35,6 +37,7 @@ namespace AI
         private void Awake()
         {
             controller = GetComponent<AiController>();
+            
         }
 
         private void Start()
@@ -55,12 +58,12 @@ namespace AI
 
         private void Update()
         {
-            state.Update();
+            /*state.Update();
             string nextState = state.TransitionCheck();
             if (!string.IsNullOrWhiteSpace(nextState))
             {
                 // TODO: switch state
-            }
+            }*/
         }
 
         private void EquipWeapon(Weapon weapon)

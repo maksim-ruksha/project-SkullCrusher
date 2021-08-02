@@ -11,15 +11,15 @@ namespace AI.Classes.States
         private IdleStateConfig stateConfig;
 
         private Vector3 initialPosition;
-        
+
         private ContactStateConfig contactStateConfig;
-        
+
         private List<Vector3> patrolPoints;
         private int currentPointIndex;
 
-        public IdleState(AiStateConfig config, AiBot bot, Transform player): base(config, bot, player)
+        public IdleState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
         {
-            name = IdleState;
+            name = "IdleState";
             stateConfig = (IdleStateConfig) config;
             contactStateConfig = bot.config.contactStateConfig;
             initialPosition = bot.transform.position;
@@ -44,28 +44,28 @@ namespace AI.Classes.States
                     bot.controller.GoTo(initialPosition);
                     break;
                 }
-                
+
                 case IdleStateType.Patrol:
                 {
                     if (bot.controller.IsArrivedAtTargetPosition())
                     {
-                        currentPointIndex = (currentPointIndex + 1)  % patrolPoints.Count;
+                        currentPointIndex = (currentPointIndex + 1) % patrolPoints.Count;
                         Vector3 position = patrolPoints[currentPointIndex];
                         bot.controller.GoTo(position);
                     }
+
                     break;
                 }
-                
+
                 case IdleStateType.RandomWalk:
                 {
                     // do we really need this?
                     break;
                 }
-                    
             }
         }
 
-        public override string TransitionCheck()
+        public override int TransitionCheck()
         {
             /* TODO: make transitions of IdleState
              * Contact +
@@ -74,9 +74,10 @@ namespace AI.Classes.States
             float playerVisibility = bot.controller.GetPlayerVisibility();
             if (playerVisibility > contactStateConfig.contactStartPlayerVisibility)
             {
-                return ContactState;
+                return manager.GetStateIdByName("ContactState");
             }
-            return KeepCurrentState;
+
+            return manager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

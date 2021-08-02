@@ -17,14 +17,13 @@ namespace AI.Classes.States
         private bool pickedCover;
         private bool startedReload;
 
-        public TakeCoverState(AiStateConfig config, AiBot bot, Transform player): base(config, bot, player)
+        public TakeCoverState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
         {
-            name = TakeCoverState;
+            name = "TakeCoverState";
             stateConfig = (TakeCoverStateConfig) config;
             GameObject globalController = GameObject.Find(Settings.GameObjects.GlobalController);
             coverManager = globalController.GetComponent<CoverManager>();
             takingCoverForReloading = bot.IsNeedToStartSeekingCover();
-            
         }
 
         public override void Update()
@@ -37,7 +36,7 @@ namespace AI.Classes.States
                 bot.controller.GoTo(coverPosition);
                 pickedCover = true;
             }
-            
+
             if (pickedCover && bot.controller.IsArrivedAtTargetPosition())
             {
                 if (takingCoverForReloading)
@@ -55,14 +54,14 @@ namespace AI.Classes.States
             }
         }
 
-        public override string TransitionCheck()
+        public override int TransitionCheck()
         {
             if (pickedCover && bot.controller.IsArrivedAtTargetPosition() && startedReload && !bot.IsNeedToReload())
             {
-                return AttackState;
+                return manager.GetStateIdByName("AttackState");
             }
 
-            return KeepCurrentState;
+            return manager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

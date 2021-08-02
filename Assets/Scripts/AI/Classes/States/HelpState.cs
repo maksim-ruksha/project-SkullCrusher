@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace AI.Classes.States
 {
-    public class HelpState: AiState
+    public class HelpState : AiState
     {
         private HelpStateConfig stateConfig;
 
-        public HelpState(AiStateConfig config, AiBot bot, Transform player): base(config, bot, player)
+        public HelpState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
         {
-            name = HelpState;
+            name = "HelpState";
             stateConfig = (HelpStateConfig) config;
         }
-        
+
         public override void Update()
         {
             throw new System.NotImplementedException();
         }
 
-        public override string TransitionCheck()
+        public override int TransitionCheck()
         {
             throw new System.NotImplementedException();
         }

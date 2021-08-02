@@ -16,11 +16,14 @@ namespace AI.Classes.States
 
         private List<Vector3> positionsToCheck;
 
+        private Vector3 currentPositionToCheck;
+
         private float currentWaitTime;
 
-        public SearchState(AiStateConfig config, AiBot bot, Transform player) : base(config, bot, player)
+        public SearchState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot,
+            player, manager)
         {
-            name = SearchState;
+            name = "SearchState";
             stateConfig = (SearchStateConfig) config;
             random = new Random(config.GetHashCode() + bot.config.GetHashCode());
             positionsToCheck = GetCoverListToCheck(bot.transform.position, bot.GetPlayerLastVelocity(),
@@ -31,12 +34,34 @@ namespace AI.Classes.States
         {
             if (currentWaitTime <= 0)
             {
+                if (CanGoToNextCheckPosition())
+                {
+                    GoToNextCheckPosition();
+                }
             }
         }
 
-        public override string TransitionCheck()
+        public override int TransitionCheck()
         {
-            throw new System.NotImplementedException();
+            float playerVisibility = bot.controller.GetPlayerVisibility();
+
+            if (playerVisibility > stateConfig.detectionPlayerVisibility)
+            {
+                return manager.GetStateIdByName("AttackState");
+            }
+
+            return manager.GetStateIdByName("KeepCurrentState");
+        }
+
+        private void GoToNextCheckPosition()
+        {
+            currentPositionToCheck = positionsToCheck[0];
+            positionsToCheck.RemoveAt(0);
+        }
+
+        private bool CanGoToNextCheckPosition()
+        {
+            return positionsToCheck.Count > 0;
         }
 
 
@@ -44,10 +69,10 @@ namespace AI.Classes.States
         {
             List<Vector3> result = new List<Vector3>();
             List<Cover> nearestCluster = coverManager.GetNearestClusterList(position);
-            
+
             if (limiter < 0)
                 limiter = nearestCluster.Count;
-            
+
             // TODO: change limiter depending on difficulty
             for (int i = 0; i < Mathf.Min(nearestCluster.Count, limiter); i++)
             {
@@ -58,7 +83,6 @@ namespace AI.Classes.States
                 {
                     result.Add(coverPosition);
                 }
-                
             }
 
             return result;

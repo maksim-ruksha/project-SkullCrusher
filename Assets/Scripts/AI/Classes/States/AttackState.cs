@@ -8,9 +8,9 @@ namespace AI.Classes.States
         private AttackStateConfig stateConfig;
 
 
-        public AttackState(AiStateConfig config, AiBot bot, Transform player) : base(config, bot, player)
+        public AttackState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
         {
-            name = AttackState;
+            name = "AttackState";
             stateConfig = (AttackStateConfig) config;
         }
 
@@ -37,22 +37,22 @@ namespace AI.Classes.States
             bot.Fire();
         }
 
-        public override string TransitionCheck()
+        public override int TransitionCheck()
         {
             float playerVisibility = bot.controller.GetPlayerVisibility();
             if (playerVisibility > stateConfig.contactLosePlayerVisibility)
             {
-                return ChaseState;
+                return manager.GetStateIdByName("ChaseState");
             }
 
             if (bot.IsNeedToStartSeekingCover())
             {
-                return TakeCoverState;
+                return manager.GetStateIdByName("TakeCoverState");
             }
             
             // TODO: transition to HideState
 
-            return KeepCurrentState;
+            return manager.GetStateIdByName("KeepCurrentState");
         }
 
 
