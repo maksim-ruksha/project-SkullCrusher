@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using Level.Covers;
 using Level.Covers.Classes;
 using UnityEngine;
 using Random = System.Random;
 
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class SearchState : AiState
+    public class HumanSearchState : AiState
     {
-        private SearchStateConfig stateConfig;
-        private CoverManager coverManager;
+        private HumanSearchStateConfig stateConfig;
         private Random random;
 
         private List<Vector3> positionsToCheck;
@@ -20,11 +20,10 @@ namespace AI.Classes.States
 
         private float currentWaitTime;
 
-        public SearchState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot,
-            player, manager)
+        public HumanSearchState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "SearchState";
-            stateConfig = (SearchStateConfig) config;
+            stateConfig = (HumanSearchStateConfig) config;
             random = new Random(config.GetHashCode() + bot.config.GetHashCode());
             positionsToCheck = GetCoverListToCheck(bot.transform.position, bot.GetPlayerLastVelocity(),
                 stateConfig.coverChoiceLimiter);
@@ -47,10 +46,10 @@ namespace AI.Classes.States
 
             if (playerVisibility > stateConfig.detectionPlayerVisibility)
             {
-                return manager.GetStateIdByName("AttackState");
+                return stateManager.GetStateIdByName("AttackState");
             }
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
 
         private void GoToNextCheckPosition()

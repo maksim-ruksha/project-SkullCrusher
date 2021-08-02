@@ -1,11 +1,12 @@
 ﻿using AI.Classes.States;
 using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
 namespace AI.Scriptables
 {
     [CreateAssetMenu(fileName = "AiConfig", menuName = "Skull Crusher/Ai Bot Config")]
-    public class AiBotConfig : ScriptableObject
+    public class AiHumanBotConfig : ScriptableObject
     {
         [Header("Character")] public float characterSpeed = 1.0f;
         public float headRotationSpeed = 1.0f;
@@ -46,15 +47,15 @@ namespace AI.Scriptables
 
         /*[Header("Behaviours Settings")]
         */
-        [Header("States Configs")] public IdleStateConfig idleStateConfig;
-        public ContactStateConfig contactStateConfig;
-        public AttackStateConfig attackStateConfig;
-        public TakeCoverStateConfig takeCoverStateConfig;
-        public ChaseStateConfig chaseStateConfig;
-        public SearchStateConfig searchStateConfig;
-        public RearAttackStateConfig rearAttackStateConfig;
-        public HideStateConfig hideStateConfig;
-        public HelpStateConfig helpStateConfig;
+        [Header("States Configs")] public HumanIdleStateConfig humanIdleStateConfig;
+        public HumanContactStateConfig humanContactStateConfig;
+        public HumanAttackStateConfig humanAttackStateConfig;
+        public HumanTakeCoverStateConfig humanTakeCoverStateConfig;
+        public HumanChaseStateConfig humanChaseStateConfig;
+        public HumanSearchStateConfig humanSearchStateConfig;
+        public HumanRearAttackStateConfig humanRearAttackStateConfig;
+        public HumanHideStateConfig humanHideStateConfig;
+        public HumanHelpStateConfig humanHelpStateConfig;
 
 
         private static string[][] validStateTransitions =
@@ -75,15 +76,15 @@ namespace AI.Scriptables
         {
             return new AiStateConfig[]
             {
-                idleStateConfig,
-                contactStateConfig,
-                attackStateConfig,
-                takeCoverStateConfig,
-                chaseStateConfig,
-                searchStateConfig,
-                rearAttackStateConfig,
-                hideStateConfig,
-                helpStateConfig
+                humanIdleStateConfig,
+                humanContactStateConfig,
+                humanAttackStateConfig,
+                humanTakeCoverStateConfig,
+                humanChaseStateConfig,
+                humanSearchStateConfig,
+                humanRearAttackStateConfig,
+                humanHideStateConfig,
+                humanHelpStateConfig
             };
         }
 

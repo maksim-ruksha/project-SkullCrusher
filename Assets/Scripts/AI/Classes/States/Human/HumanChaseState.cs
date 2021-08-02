@@ -1,16 +1,17 @@
 ﻿using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class ChaseState : AiState
+    public class HumanChaseState : AiState
     {
-        private ChaseStateConfig stateConfig;
+        private HumanChaseStateConfig stateConfig;
 
-        public ChaseState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanChaseState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "ChaseState";
-            stateConfig = (ChaseStateConfig) config;
+            stateConfig = (HumanChaseStateConfig) config;
         }
 
         public override void Update()
@@ -23,15 +24,15 @@ namespace AI.Classes.States
             float playerVisibility = bot.controller.GetPlayerVisibility();
             if (playerVisibility > stateConfig.detectionPlayerVisibility)
             {
-                return manager.GetStateIdByName("AttackState");
+                return stateManager.GetStateIdByName("AttackState");
             }
 
             if (bot.controller.IsArrivedAtTargetPosition())
             {
-                return manager.GetStateIdByName("SearchState");
+                return stateManager.GetStateIdByName("SearchState");
             }
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

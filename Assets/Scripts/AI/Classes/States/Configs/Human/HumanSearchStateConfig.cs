@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AI.Classes.States.Configs
+namespace AI.Classes.States.Configs.Human
 {
     [Serializable]
-    public class SearchStateConfig: AiStateConfig
+    public class HumanSearchStateConfig: AiStateConfig
     {
         [Range(0, 1)] public float detectionPlayerVisibility = 0.2f;
         public float maxSearchPointDistance = 15.0f;

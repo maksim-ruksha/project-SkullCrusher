@@ -1,26 +1,26 @@
-﻿using System;
-using AI.Classes.States.Configs;
+﻿using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using Level.Covers;
 using Preferences;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class TakeCoverState : AiState
+    public class HumanTakeCoverState : AiState
     {
-        private TakeCoverStateConfig stateConfig;
+        private HumanTakeCoverStateConfig stateConfig;
 
-        private ContactStateConfig contactStateConfig;
+        private HumanContactStateConfig humanContactStateConfig;
 
         private CoverManager coverManager;
         private bool takingCoverForReloading;
         private bool pickedCover;
         private bool startedReload;
 
-        public TakeCoverState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanTakeCoverState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "TakeCoverState";
-            stateConfig = (TakeCoverStateConfig) config;
+            stateConfig = (HumanTakeCoverStateConfig) config;
             GameObject globalController = GameObject.Find(Settings.GameObjects.GlobalController);
             coverManager = globalController.GetComponent<CoverManager>();
             takingCoverForReloading = bot.IsNeedToStartSeekingCover();
@@ -58,10 +58,10 @@ namespace AI.Classes.States
         {
             if (pickedCover && bot.controller.IsArrivedAtTargetPosition() && startedReload && !bot.IsNeedToReload())
             {
-                return manager.GetStateIdByName("AttackState");
+                return stateManager.GetStateIdByName("AttackState");
             }
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

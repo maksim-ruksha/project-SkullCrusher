@@ -25,8 +25,11 @@ namespace Damages
         
         private List<DamageableObjectPart> parts;
 
+        private float initialHealth;
+
         private void Start()
         {
+            initialHealth = health;
             AssignParts(transform);
             if (!defaultDamageableGroup)
             {
@@ -52,6 +55,11 @@ namespace Damages
                 onDiedDamageEvent.Invoke(damage, part);
             }
             
+        }
+
+        public float GetRangedHealth()
+        {
+            return health / initialHealth;
         }
 
         public bool IsAlive()

@@ -1,17 +1,17 @@
 ﻿using AI.Classes.States.Configs;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class AttackState : AiState
+    public class HumanAttackState : AiState
     {
-        private AttackStateConfig stateConfig;
+        private HumanAttackStateConfig stateConfig;
 
 
-        public AttackState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanAttackState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "AttackState";
-            stateConfig = (AttackStateConfig) config;
+            stateConfig = (HumanAttackStateConfig) config;
         }
 
         public override void Update()
@@ -42,17 +42,17 @@ namespace AI.Classes.States
             float playerVisibility = bot.controller.GetPlayerVisibility();
             if (playerVisibility > stateConfig.contactLosePlayerVisibility)
             {
-                return manager.GetStateIdByName("ChaseState");
+                return stateManager.GetStateIdByName("ChaseState");
             }
 
             if (bot.IsNeedToStartSeekingCover())
             {
-                return manager.GetStateIdByName("TakeCoverState");
+                return stateManager.GetStateIdByName("TakeCoverState");
             }
             
             // TODO: transition to HideState
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
 
 

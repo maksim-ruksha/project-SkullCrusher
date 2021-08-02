@@ -2,10 +2,10 @@
 using AI.Enums;
 using UnityEngine;
 
-namespace AI.Classes.States.Configs
+namespace AI.Classes.States.Configs.Human
 {
     [Serializable]
-    public class IdleStateConfig: AiStateConfig
+    public class HumanIdleStateConfig: AiStateConfig
     {
         public IdleStateType type;
 

@@ -1,18 +1,19 @@
 ﻿using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class ContactState : AiState
+    public class HumanContactState : AiState
     {
-        private ContactStateConfig stateConfig;
+        private HumanContactStateConfig stateConfig;
 
         private float contactTime;
 
-        public ContactState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanContactState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "ContactState";
-            stateConfig = (ContactStateConfig) config;
+            stateConfig = (HumanContactStateConfig) config;
         }
 
         public override void Update()
@@ -35,16 +36,16 @@ namespace AI.Classes.States
                     
                 }
                 */
-                return manager.GetStateIdByName("AttackState");
+                return stateManager.GetStateIdByName("AttackState");
             }
 
             if (playerVisibility < stateConfig.contactLosePlayerVisibility)
             {
                 contactTime = 0.0f;
-                return manager.GetStateIdByName("IdleState");
+                return stateManager.GetStateIdByName("IdleState");
             }
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

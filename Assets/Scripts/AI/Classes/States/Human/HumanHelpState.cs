@@ -1,16 +1,17 @@
 ﻿using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class HelpState : AiState
+    public class HumanHelpState : AiState
     {
-        private HelpStateConfig stateConfig;
+        private HumanHelpStateConfig stateConfig;
 
-        public HelpState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanHelpState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "HelpState";
-            stateConfig = (HelpStateConfig) config;
+            stateConfig = (HumanHelpStateConfig) config;
         }
 
         public override void Update()

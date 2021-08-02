@@ -1,27 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using AI.Enums;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class IdleState : AiState
+    public class HumanIdleState : AiState
     {
-        private IdleStateConfig stateConfig;
+        private HumanIdleStateConfig stateConfig;
 
         private Vector3 initialPosition;
 
-        private ContactStateConfig contactStateConfig;
+        private HumanContactStateConfig humanContactStateConfig;
 
         private List<Vector3> patrolPoints;
         private int currentPointIndex;
 
-        public IdleState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanIdleState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "IdleState";
-            stateConfig = (IdleStateConfig) config;
-            contactStateConfig = bot.config.contactStateConfig;
+            stateConfig = (HumanIdleStateConfig) config;
+            humanContactStateConfig = bot.config.humanContactStateConfig;
             initialPosition = bot.transform.position;
             if (stateConfig.type == IdleStateType.Patrol)
             {
@@ -72,12 +72,12 @@ namespace AI.Classes.States
              * Help
              */
             float playerVisibility = bot.controller.GetPlayerVisibility();
-            if (playerVisibility > contactStateConfig.contactStartPlayerVisibility)
+            if (playerVisibility > humanContactStateConfig.contactStartPlayerVisibility)
             {
-                return manager.GetStateIdByName("ContactState");
+                return stateManager.GetStateIdByName("ContactState");
             }
 
-            return manager.GetStateIdByName("KeepCurrentState");
+            return stateManager.GetStateIdByName("KeepCurrentState");
         }
     }
 }

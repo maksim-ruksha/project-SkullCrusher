@@ -1,16 +1,17 @@
 ﻿using AI.Classes.States.Configs;
+using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
-namespace AI.Classes.States
+namespace AI.Classes.States.Human
 {
-    public class RearAttackState : AiState
+    public class HumanRearAttackState : AiState
     {
-        private RearAttackStateConfig stateConfig;
+        private HumanRearAttackStateConfig stateConfig;
 
-        public RearAttackState(AiStateConfig config, AiBot bot, Transform player, StateManager manager) : base(config, bot, player, manager)
+        public HumanRearAttackState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
             name = "RearAttackState";
-            stateConfig = (RearAttackStateConfig) config;
+            stateConfig = (HumanRearAttackStateConfig) config;
         }
 
         public override void Update()

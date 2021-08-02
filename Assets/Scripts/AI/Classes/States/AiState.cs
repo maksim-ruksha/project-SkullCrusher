@@ -1,5 +1,6 @@
 ﻿using System;
 using AI.Classes.States.Configs;
+using Level.Covers;
 using UnityEngine;
 
 namespace AI.Classes.States
@@ -9,18 +10,21 @@ namespace AI.Classes.States
     {
         public string name = "AiState";
         
-        public AiStateConfig config;
-        public AiBot bot;
-        public Transform player;
-        public StateManager manager;
+        protected AiStateConfig config;
+        protected AiBot bot;
+        
+        protected Transform player;
+        protected StateManager stateManager;
+        protected CoverManager coverManager;
 
 
-        public AiState(AiStateConfig config, AiBot bot, Transform player, StateManager manager)
+        public AiState(AiStateConfig config, AiBot bot)
         {
             this.config = config;
             this.bot = bot;
-            this.player = player;
-            this.manager = manager;
+            
+            player = bot.playerTransform;
+            stateManager = bot.stateManager;
         }
         
         public abstract void Update();

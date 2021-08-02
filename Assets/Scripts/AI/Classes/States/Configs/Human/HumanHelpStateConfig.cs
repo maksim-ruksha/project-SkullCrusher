@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AI.Classes.States.Configs
+namespace AI.Classes.States.Configs.Human
 {
     [Serializable]
-    public class HelpStateConfig: AiStateConfig
+    public class HumanHelpStateConfig: AiStateConfig
     {
         
         [Range(0, 1)] public float addHealthAmount = 0.15f;

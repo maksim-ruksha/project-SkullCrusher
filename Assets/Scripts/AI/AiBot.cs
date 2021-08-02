@@ -4,8 +4,10 @@ using AI.Enums;
 using AI.Scriptables;
 using Character;
 using Damages;
+using Level.Covers;
 using Preferences;
 using UnityEngine;
+using Violence;
 using Weapons;
 
 namespace AI
@@ -13,41 +15,48 @@ namespace AI
     [RequireComponent(typeof(DamageableObject))]
     [RequireComponent(typeof(ViolenceableObject))]
     [RequireComponent(typeof(AiController))]
-    public class AiBot: MonoBehaviour
+    public class AiBot : MonoBehaviour
     {
-        public AiBotConfig config;
+        public AiHumanBotConfig config;
         public Weapon initialWeapon;
-        
+
         public AiBotGroupRole groupRole;
         public AiController controller;
-        
-        private AiManager aiManager;
+
+        //private AiManager aiManager;
         private AiGroup group;
-        
-        private Transform playerTransform;
-        private Controller playerController;
+
+        // public for states
+        [HideInInspector] public Transform playerTransform;
+        [HideInInspector] public Controller playerController;
+        [HideInInspector] public StateManager stateManager;
+        [HideInInspector] public CoverManager coverManager;
         
         private DamageableObject damageableObject;
         private ViolenceableObject violenceableObject;
+        
         private Weapon equippedWeapon;
 
         private Vector3 lastPlayerPosition;
         private Vector3 lastPlayerVelocity;
-        
-        private void Awake()
-        {
-            controller = GetComponent<AiController>();
-            
-        }
+
 
         private void Start()
         {
             GameObject globalController = GameObject.Find(Settings.GameObjects.GlobalController);
+            coverManager = globalController.GetComponent<CoverManager>();
+            //aiManager = globalController.GetComponent<AiManager>();
 
-            aiManager = globalController.GetComponent<AiManager>();
+            // TODO: take damage
+            damageableObject = GetComponent<DamageableObject>();
+            violenceableObject = GetComponent<ViolenceableObject>();
+
             controller = GetComponent<AiController>();
-            
+
             playerController = playerTransform.GetComponent<Controller>();
+
+            stateManager = new StateManager();
+
             if (initialWeapon)
                 EquipWeapon(initialWeapon);
             /*
@@ -58,19 +67,13 @@ namespace AI
 
         private void Update()
         {
-            /*state.Update();
-            string nextState = state.TransitionCheck();
-            if (!string.IsNullOrWhiteSpace(nextState))
-            {
-                // TODO: switch state
-            }*/
         }
 
         private void EquipWeapon(Weapon weapon)
         {
             // TODO: implement EquipWeapon()
         }
-        
+
         /*
          * =================================================
          * ================ SHIT FOR STATES ================
@@ -79,6 +82,11 @@ namespace AI
         public void Fire()
         {
             // TODO: implement Fire()
+        }
+
+        public float GetRangedHealth()
+        {
+            return damageableObject.GetRangedHealth();
         }
 
         public void ReloadWeapon()
@@ -93,7 +101,8 @@ namespace AI
 
         public bool IsNeedToStartSeekingCover()
         {
-            return (float)equippedWeapon.currentClipAmmoAmount / equippedWeapon.weaponParameters.clipAmmoAmount <= config.predictTakingCoverClipAmmoMultiplier;
+            return (float) equippedWeapon.currentClipAmmoAmount / equippedWeapon.weaponParameters.clipAmmoAmount <=
+                   config.predictTakingCoverClipAmmoMultiplier;
         }
 
         public bool IsNeedToReload()
@@ -116,6 +125,5 @@ namespace AI
         {
             return lastPlayerVelocity;
         }
-        
     }
 }
