@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637639285226729183
-    m_Hash: 1081877023
+      ticks: 637639312580583765
+    m_Hash: 3908491042
   m_LockFileStatus:
     m_FilePath: G:/Projects/Synthetic Eye/GitHub/project-SkullCrusher/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637639288008734787
-    m_Hash: 2357473182
+      ticks: 637639313672018626
+    m_Hash: 88931538
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -679,101 +679,6 @@ m_PackageAssets:
         type: git
         url: git+https://github.com/Unity-Technologies/com.unity.progrids.git
         revision: 381f2b0b5dda11525d53e2c608284a3f68d1beff
-        path: 
-    - packageId: com.unity.test-framework@1.1.19
-      testable: 0
-      isDirectDependency: 1
-      version: 1.1.19
-      source: 1
-      resolvedPath: G:\Projects\Synthetic Eye\GitHub\project-SkullCrusher\Library\PackageCache\com.unity.test-framework@1.1.19
-      assetPath: Packages/com.unity.test-framework
-      name: com.unity.test-framework
-      displayName: Test Framework
-      author:
-        name: 
-        email: 
-        url: 
-      category: Unity Test Framework
-      type: 
-      description: Test framework for running Edit mode and Play mode tests in Unity.
-      status: 4
-      errors: []
-      versions:
-        all:
-        - 0.0.4-preview
-        - 0.0.29-preview
-        - 1.0.0
-        - 1.0.7
-        - 1.0.9
-        - 1.0.11
-        - 1.0.12
-        - 1.0.13
-        - 1.0.14
-        - 1.0.16
-        - 1.0.17
-        - 1.0.18
-        - 1.1.0
-        - 1.1.1
-        - 1.1.2
-        - 1.1.3
-        - 1.1.5
-        - 1.1.8
-        - 1.1.9
-        - 1.1.11
-        - 1.1.13
-        - 1.1.14
-        - 1.1.16
-        - 1.1.18
-        - 1.1.19
-        - 1.1.20
-        - 1.1.22
-        - 1.1.24
-        - 1.1.26
-        - 1.1.27
-        compatible:
-        - 1.1.19
-        - 1.1.20
-        - 1.1.22
-        - 1.1.24
-        - 1.1.26
-        - 1.1.27
-        verified: 1.1.27
-      dependencies:
-      - name: com.unity.ext.nunit
-        version: 1.0.5
-      - name: com.unity.modules.imgui
-        version: 1.0.0
-      - name: com.unity.modules.jsonserialize
-        version: 1.0.0
-      resolvedDependencies:
-      - name: com.unity.ext.nunit
-        version: 1.0.5
-      - name: com.unity.modules.imgui
-        version: 1.0.0
-      - name: com.unity.modules.jsonserialize
-        version: 1.0.0
-      keywords:
-      - Test
-      - TestFramework
-      registry:
-        id: main
-        name: 
-        url: https://packages.unity.com
-        scopes: []
-        isDefault: 1
-        capabilities: 7
-      hasRegistry: 1
-      hideInEditor: 1
-      entitlements:
-        isAllowed: 1
-      isAssetStorePackage: 0
-      datePublishedTicks: 637413148910000000
-      documentationUrl: 
-      hasRepository: 1
-      repository:
-        type: git
-        url: git+https://github.com/Unity-Technologies/com.unity.test-framework.git
-        revision: 83583c7273ee961612200215e8989039bbce8748
         path: 
     - packageId: com.unity.textmeshpro@3.0.1
       testable: 0
@@ -2928,6 +2833,159 @@ m_PackageAssets:
         url: 
         revision: 
         path: 
+    - packageId: com.unity.settings-manager@1.0.3
+      testable: 0
+      isDirectDependency: 0
+      version: 1.0.3
+      source: 1
+      resolvedPath: G:\Projects\Synthetic Eye\GitHub\project-SkullCrusher\Library\PackageCache\com.unity.settings-manager@1.0.3
+      assetPath: Packages/com.unity.settings-manager
+      name: com.unity.settings-manager
+      displayName: Settings Manager
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: A framework for making any serializable field a setting, complete
+        with a pre-built settings interface.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.1.0-preview.4
+        - 0.1.0-preview.8
+        - 1.0.0
+        - 1.0.1
+        - 1.0.2
+        - 1.0.3
+        compatible:
+        - 0.1.0-preview.4
+        - 0.1.0-preview.8
+        - 1.0.0
+        - 1.0.1
+        - 1.0.2
+        - 1.0.3
+        verified: 1.0.3
+      dependencies: []
+      resolvedDependencies: []
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637300096300000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/com.unity.settings-manager.git
+        revision: 473664ccba1496294b741cf169740a5d54b3d0b6
+        path: 
+    - packageId: com.unity.test-framework@1.1.19
+      testable: 0
+      isDirectDependency: 0
+      version: 1.1.19
+      source: 1
+      resolvedPath: G:\Projects\Synthetic Eye\GitHub\project-SkullCrusher\Library\PackageCache\com.unity.test-framework@1.1.19
+      assetPath: Packages/com.unity.test-framework
+      name: com.unity.test-framework
+      displayName: Test Framework
+      author:
+        name: 
+        email: 
+        url: 
+      category: Unity Test Framework
+      type: 
+      description: Test framework for running Edit mode and Play mode tests in Unity.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.4-preview
+        - 0.0.29-preview
+        - 1.0.0
+        - 1.0.7
+        - 1.0.9
+        - 1.0.11
+        - 1.0.12
+        - 1.0.13
+        - 1.0.14
+        - 1.0.16
+        - 1.0.17
+        - 1.0.18
+        - 1.1.0
+        - 1.1.1
+        - 1.1.2
+        - 1.1.3
+        - 1.1.5
+        - 1.1.8
+        - 1.1.9
+        - 1.1.11
+        - 1.1.13
+        - 1.1.14
+        - 1.1.16
+        - 1.1.18
+        - 1.1.19
+        - 1.1.20
+        - 1.1.22
+        - 1.1.24
+        - 1.1.26
+        - 1.1.27
+        compatible:
+        - 1.1.19
+        - 1.1.20
+        - 1.1.22
+        - 1.1.24
+        - 1.1.26
+        - 1.1.27
+        verified: 1.1.27
+      dependencies:
+      - name: com.unity.ext.nunit
+        version: 1.0.5
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      resolvedDependencies:
+      - name: com.unity.ext.nunit
+        version: 1.0.5
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      keywords:
+      - Test
+      - TestFramework
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637413148910000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/com.unity.test-framework.git
+        revision: 83583c7273ee961612200215e8989039bbce8748
+        path: 
     - packageId: com.unity.ext.nunit@1.0.5
       testable: 0
       isDirectDependency: 0
@@ -2988,64 +3046,6 @@ m_PackageAssets:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.ext.nunit.git
         revision: 1b3e542964a65210e966f5bf8751f62b1dcd8d69
-        path: 
-    - packageId: com.unity.settings-manager@1.0.3
-      testable: 0
-      isDirectDependency: 0
-      version: 1.0.3
-      source: 1
-      resolvedPath: G:\Projects\Synthetic Eye\GitHub\project-SkullCrusher\Library\PackageCache\com.unity.settings-manager@1.0.3
-      assetPath: Packages/com.unity.settings-manager
-      name: com.unity.settings-manager
-      displayName: Settings Manager
-      author:
-        name: 
-        email: 
-        url: 
-      category: 
-      type: 
-      description: A framework for making any serializable field a setting, complete
-        with a pre-built settings interface.
-      status: 4
-      errors: []
-      versions:
-        all:
-        - 0.1.0-preview.4
-        - 0.1.0-preview.8
-        - 1.0.0
-        - 1.0.1
-        - 1.0.2
-        - 1.0.3
-        compatible:
-        - 0.1.0-preview.4
-        - 0.1.0-preview.8
-        - 1.0.0
-        - 1.0.1
-        - 1.0.2
-        - 1.0.3
-        verified: 1.0.3
-      dependencies: []
-      resolvedDependencies: []
-      keywords: []
-      registry:
-        id: main
-        name: 
-        url: https://packages.unity.com
-        scopes: []
-        isDefault: 1
-        capabilities: 7
-      hasRegistry: 1
-      hideInEditor: 1
-      entitlements:
-        isAllowed: 1
-      isAssetStorePackage: 0
-      datePublishedTicks: 637300096300000000
-      documentationUrl: 
-      hasRepository: 1
-      repository:
-        type: git
-        url: git+https://github.com/Unity-Technologies/com.unity.settings-manager.git
-        revision: 473664ccba1496294b741cf169740a5d54b3d0b6
         path: 
   m_LocalPackages:
     m_LocalFileStatus: []
