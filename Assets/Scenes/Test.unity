@@ -37122,7 +37122,7 @@ MonoBehaviour:
     pulloutTime: 0
   bullet: {fileID: 1658482976548361981}
   bulletParameters:
-    speed: 400
+    speed: 384
     radius: 0.1
     initialRicochetChance: 0.75
     maxRicochetAngle: 22
