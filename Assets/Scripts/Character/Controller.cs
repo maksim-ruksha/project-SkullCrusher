@@ -118,7 +118,7 @@ namespace Character
             LookControl(inputManager.look);
             CrouchControl(inputManager.isCrouchPressed);
             lastDeltaTime = Time.deltaTime;
-            print(velocity.magnitude);
+            // print(velocity.magnitude); -- Offed some things
         }
 
         private void MoveControl(Vector3 input)
