@@ -127,6 +127,7 @@
      <Compile Include="Assets\Scripts\Level\Covers\Debug\NavMeshLinesVisualizer.cs" />
      <Compile Include="Assets\Scripts\Preferences\Settings.cs" />
      <Compile Include="Assets\Scripts\AI\AiBot.cs" />
+     <Compile Include="Assets\Scripts\UI\GlobalUI.cs" />
      <None Include="Assets\Shaders\Violence\ViolenceSpread.shader" />
      <None Include="Assets\Shaders\Violence\ViolenceableMultimasked.shader" />
      <None Include="Assets\Shaders\Violence\AdditiveMaskBlend.shader" />

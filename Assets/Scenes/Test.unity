@@ -48236,7 +48236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &983303852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -50946,7 +50946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1046033582
 Transform:
   m_ObjectHideFlags: 0
@@ -66356,8 +66356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49aee60d1cca48c498ec936fca875c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomFieldOfView: 20
-  zoomSpeed: 10
+  zoomFieldOfView: 50
+  zoomSpeed: 5
 --- !u!114 &1513436013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66365,7 +66365,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513436007}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 671f4ba726c24afcb5a24f732dae3609, type: 3}
   m_Name: 
@@ -66406,7 +66406,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -84876,6 +84876,7 @@ GameObject:
   - component: {fileID: 1892408950}
   - component: {fileID: 1892408946}
   - component: {fileID: 1892408948}
+  - component: {fileID: 1892408951}
   m_Layer: 0
   m_Name: Global Controller
   m_TagString: Untagged
@@ -84978,6 +84979,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4691d6f6ec46431eb1e8519e56020888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1892408951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892408944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04f77c0c7cb0ab41a6425bc6b4967f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!43 &1902777381
