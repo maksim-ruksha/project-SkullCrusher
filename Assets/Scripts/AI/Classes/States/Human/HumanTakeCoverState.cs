@@ -14,8 +14,9 @@ namespace AI.Classes.States.Human
 
         private CoverManager coverManager;
         private bool takingCoverForReloading;
-        private bool pickedCover;
         private bool startedReload;
+
+        private float currentCoverTime = 0.0f;
 
         public HumanTakeCoverState(AiStateConfig config, AiBot bot) : base(config, bot)
         {
@@ -26,18 +27,23 @@ namespace AI.Classes.States.Human
             takingCoverForReloading = bot.IsNeedToStartSeekingCover();
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanTakeCoverStateConfig) newConfig;
+        }
+
         public override void Update()
         {
-            if (!pickedCover)
+            if (currentCoverTime <= 0)
             {
                 Vector3 playerDirection = (player.position - bot.transform.position).normalized;
                 Vector3 coverPosition = coverManager.GetNearestCoverPosition(bot.transform.position, playerDirection,
                     stateConfig.angleThreshold);
                 bot.controller.GoTo(coverPosition);
-                pickedCover = true;
+                currentCoverTime = stateConfig.coverUpdateInterval;
             }
 
-            if (pickedCover && bot.controller.IsArrivedAtTargetPosition())
+            if (currentCoverTime > 0 && bot.controller.IsArrivedAtTargetPosition())
             {
                 if (takingCoverForReloading)
                 {
@@ -56,7 +62,7 @@ namespace AI.Classes.States.Human
 
         public override int TransitionCheck()
         {
-            if (pickedCover && bot.controller.IsArrivedAtTargetPosition() && startedReload && !bot.IsNeedToReload())
+            if (currentCoverTime > 0 && bot.controller.IsArrivedAtTargetPosition() && startedReload && !bot.IsNeedToReload())
             {
                 return stateManager.GetStateIdByName("AttackState");
             }

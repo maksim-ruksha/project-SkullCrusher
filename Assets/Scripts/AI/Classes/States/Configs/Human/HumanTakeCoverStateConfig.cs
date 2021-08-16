@@ -8,5 +8,6 @@ namespace AI.Classes.States.Configs.Human
     {
         //public bool botCanCrouch;
         [Range(0, 90)] public float angleThreshold = 15.0f;
+        public float coverUpdateInterval;
     }
 }

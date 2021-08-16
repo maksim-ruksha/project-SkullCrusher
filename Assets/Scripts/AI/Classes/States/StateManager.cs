@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AI.Classes.States.Configs;
 
 namespace AI.Classes.States
 {
+    [Serializable]
     public class StateManager
     {
-        private int currentStateId;
+        private int currentStateId = 1;
         
         private List<AiState> states;
         private List<AiStateConfig> configs;
@@ -16,9 +18,9 @@ namespace AI.Classes.States
             states = new List<AiState>();
             configs = new List<AiStateConfig>();
             ids = new Dictionary<string, int>();
-            
+
             states.Add(null);
-            configs.Add(null);
+            configs.Add(null); 
             ids.Add("KeepCurrentState", 0);
         }
 
@@ -26,6 +28,11 @@ namespace AI.Classes.States
         {
             states[currentStateId].Update();
             int response = states[currentStateId].TransitionCheck();
+            if (response != 0)
+            {
+                currentStateId = response;
+                states[currentStateId].Transit(configs[currentStateId]);
+            }
         }
 
         public void UpdateConfig(int id, AiStateConfig config)
@@ -38,6 +45,7 @@ namespace AI.Classes.States
             int id = states.Count;
             states.Add(state);
             configs.Add(config);
+
             ids.Add(state.name, id);
             return id;
         }

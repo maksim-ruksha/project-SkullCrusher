@@ -187,7 +187,6 @@ namespace AI
                     result += visibility * perPartPointMultiplier;
                 }
             }
-
             return result;
         }
 

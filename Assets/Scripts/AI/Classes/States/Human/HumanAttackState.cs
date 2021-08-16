@@ -14,6 +14,11 @@ namespace AI.Classes.States.Human
             stateConfig = (HumanAttackStateConfig) config;
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanAttackStateConfig) newConfig;
+        }
+
         public override void Update()
         {
             Vector3 playerPosition = player.position;
@@ -40,7 +45,7 @@ namespace AI.Classes.States.Human
         public override int TransitionCheck()
         {
             float playerVisibility = bot.controller.GetPlayerVisibility();
-            if (playerVisibility > stateConfig.contactLosePlayerVisibility)
+            if (playerVisibility < stateConfig.contactLosePlayerVisibility)
             {
                 return stateManager.GetStateIdByName("ChaseState");
             }

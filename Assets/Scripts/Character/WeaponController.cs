@@ -2,14 +2,24 @@
 using Preferences;
 using SingleInstance;
 using UnityEngine;
+using Util;
 using Weapons;
+using Weapons.Classes;
 
 namespace Character
 {
     [RequireComponent(typeof(Controller))]
     public class WeaponController : MonoBehaviour
     {
+        public bool useOldSightFollow;
+        public bool needPush = false;
+
         public Controller controller;
+
+        public float sightPositionFollowAccelerationSpeed = 10.0f;
+        public float sightFollowMaxOffset = 0.5f;
+        public float sightPositionFollowDecelerationSpeed = 10.0f;
+        [Range(0, 2)] public float moveImpact = 1.0f;
 
         public float weaponCastDistance = 1000.0f;
         public LayerMask weaponCastMask;
@@ -26,10 +36,18 @@ namespace Character
         private Weapon changingToWeapon;
         private Weapon secondaryWeapon;
 
+        // (previousTargetPosition, currentDelta, offset)
+        private (Vector3, Vector3, Vector3)[] weaponsSightFollowData;
+
 
         private float currentHideWhileChangingTime;
         private float currentDroppingTime;
 
+        private Vector3 previousTargetPosition;
+        private Vector3 currentDelta;
+        private Vector3 offset;
+
+        private Vector3 lastVelocity;
 
         private void Start()
         {
@@ -38,6 +56,7 @@ namespace Character
             inputManager = globalController.GetComponent<InputManager>();
 
             weapons = new Weapon[Settings.Config.weaponSlotsCount];
+            weaponsSightFollowData = new (Vector3, Vector3, Vector3)[Settings.Config.weaponSlotsCount];
         }
 
         private void Update()
@@ -45,7 +64,14 @@ namespace Character
             WeaponsFireUpdate();
             MainWeaponStateUpdate();
             SecondaryWeaponUpdate();
+            if(useOldSightFollow)
+                SightFollowUpdate(mainWeapon, true);
+            else
+                SightFollowUpdate1(mainWeapon, true);
+            SightFollowUpdate(secondaryWeapon, false);
+            lastVelocity = controller.GetVelocity();
         }
+
 
         private void MainWeaponStateUpdate()
         {
@@ -94,6 +120,7 @@ namespace Character
             }
         }
 
+
         private void WeaponsFireUpdate()
         {
             if (inputManager.isFire1Pressed)
@@ -115,6 +142,85 @@ namespace Character
                 }
             }
         }
+
+        // some juicy weapon animations
+        private void SightFollowUpdate(Weapon weapon, bool isMain)
+        {
+            if (!weapon)
+                return;
+
+            int id = weapon.playerSlot;
+            (Vector3, Vector3, Vector3) sightFollowInfo = weaponsSightFollowData[id];
+            SightFollowParameters sightFollowParameters = weapon.sightFollowParameters;
+            
+            Vector3 targetPosition = controller.cameraTransform.TransformPoint(weapon.cameraOffsetToRight) -
+                                     controller.cameraTransform.position;
+            if (!isMain)
+            {
+                Vector3 cameraOffset = weapon.cameraOffsetToRight;
+                cameraOffset.x *= -1;
+                
+                targetPosition = controller.cameraTransform.TransformPoint(cameraOffset) -
+                                 controller.cameraTransform.position;
+            }
+
+            //Vector3 moveDelta = controller.GetVelocity() / controller.moveSpeed;
+            Vector3 moveDelta = lastVelocity / controller.moveSpeed;
+            //Vector3 delta = targetPosition - previousTargetPosition + moveDelta * sightFollowParameters.moveImpact;
+            Vector3 delta = targetPosition - sightFollowInfo.Item1 + moveDelta * sightFollowParameters.moveImpact;
+            delta = delta.normalized * Mathf.Min(sightFollowParameters.sightFollowMaxOffset, delta.magnitude);
+
+            Vector3 localDelta = controller.cameraTransform.InverseTransformDirection(delta);
+            localDelta = localDelta.normalized * Mathf.Min(sightFollowParameters.sightFollowMaxOffset, localDelta.magnitude);
+
+            sightFollowInfo.Item2 = Vector3.Lerp(sightFollowInfo.Item2, localDelta,
+                Time.deltaTime * sightFollowParameters.sightPositionFollowDecelerationSpeed);
+
+            sightFollowInfo.Item3 = Vector3.Lerp(sightFollowInfo.Item3, weapon.cameraOffsetToRight - sightFollowInfo.Item2,
+                Time.deltaTime * sightFollowParameters.sightPositionFollowAccelerationSpeed);
+
+            Quaternion targetRotation = controller.cameraTransform.rotation;
+            weapon.transform.rotation = targetRotation;
+            weapon.transform.localPosition = sightFollowInfo.Item3;
+
+            sightFollowInfo.Item1 = targetPosition;
+            
+            weaponsSightFollowData[id] = sightFollowInfo;
+            
+            //previousTargetPosition = targetPosition;
+        }
+        
+        private void SightFollowUpdate1(Weapon weapon, bool isMain)
+        {
+            if (weapon)
+            {
+                
+                Vector3 targetPosition = controller.cameraTransform.TransformPoint(weapon.cameraOffsetToRight) - controller.cameraTransform.position;
+                Vector3 moveDelta = controller.GetVelocity() / controller.moveSpeed;
+                
+                Vector3 delta = targetPosition - previousTargetPosition + moveDelta * moveImpact;
+                delta = delta.normalized * Mathf.Min(sightFollowMaxOffset, delta.magnitude);
+
+
+                Vector3 localDelta = controller.cameraTransform.InverseTransformDirection(delta);
+                localDelta = localDelta.normalized * Mathf.Min(sightFollowMaxOffset, localDelta.magnitude);
+
+                currentDelta = Vector3.Lerp(currentDelta, localDelta,
+                    Time.deltaTime * sightPositionFollowDecelerationSpeed);
+                
+                offset = Vector3.Lerp(offset, weapon.cameraOffsetToRight - currentDelta, Time.deltaTime * sightPositionFollowAccelerationSpeed);
+                
+                
+                Quaternion targetRotation = controller.cameraTransform.rotation;
+                weapon.transform.rotation = targetRotation;
+                weapon.transform.localPosition = offset;
+
+                previousTargetPosition = targetPosition;
+            }
+        }
+
+
+
 
         private bool TryGetVisionPoint(Transform head, out Vector3 visionPoint)
         {
@@ -237,7 +343,7 @@ namespace Character
         {
             if (weapon == null)
                 return false;
-            
+
             for (int i = 0; i < Settings.Config.weaponSlotsCount; i++)
             {
                 if (weapons[i] != null && weapons[i].Equals(weapon))

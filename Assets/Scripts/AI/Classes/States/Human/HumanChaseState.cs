@@ -1,4 +1,5 @@
-﻿using AI.Classes.States.Configs;
+﻿using System.Runtime.InteropServices;
+using AI.Classes.States.Configs;
 using AI.Classes.States.Configs.Human;
 using UnityEngine;
 
@@ -13,7 +14,10 @@ namespace AI.Classes.States.Human
             name = "ChaseState";
             stateConfig = (HumanChaseStateConfig) config;
         }
-
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanChaseStateConfig) newConfig;
+        }
         public override void Update()
         {
             bot.controller.GoTo(bot.GetPlayerLastPosition() + bot.GetPlayerLastVelocity());

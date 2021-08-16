@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AI.Scriptables
 {
-    [CreateAssetMenu(fileName = "AiConfig", menuName = "Skull Crusher/Ai Bot Config")]
+    [CreateAssetMenu(fileName = "AiConfig", menuName = "Skull Crusher/Ai Human Bot Config")]
     public class AiHumanBotConfig : ScriptableObject
     {
         [Header("Character")] public float characterSpeed = 1.0f;
@@ -19,31 +19,33 @@ namespace AI.Scriptables
         [Range(0, 1)] public float predictTakingCoverClipAmmoMultiplier = 0.10f;
         public float reloadTimeMultiplier = 1.75f;
         
-        [Header("Behaviour")]
+        /*[Header("Behaviour")]
         [Range(0, 1)] public float coverPreference = 0.95f;
         [Range(0, 1)] public float grenadePreference = 0.25f;
-        [Range(0, 1)] public float weaponChangePreference = 0.25f;
+        [Range(0, 1)] public float weaponChangePreference = 0.25f;*/
 
         [Header("Vision")] public float visionAngle = 60.0f;
         public float visionDistance = 50.0f;
         public LayerMask visibleObjectsMask;
         
-        [Header("State Settings")] public bool allowIdleState = true;
+        /*[Header("State Settings")] public bool allowIdleState = true;
         public bool allowContactState = true;
         public bool allowAttackState = true;
         public bool allowTakeCoverState = true;
         public bool allowChaseState = true;
         public bool allowSearchState = true;
-
         public bool allowRearAttackState = true;
         public bool allowHideState = true;
-        public bool allowHelpState = true;
+        public bool allowHelpState = true;*/
 
         [Header("Group Settings")] public bool canBeCommon = true;
         public bool canBeTank = true;
         public bool canBeTankSupporter = true;
         public bool canBeRearAttacker = true;
         public bool canBeMedic = true;
+        
+        public float playerPositionShareTime = 10.0f;
+        public float playerPositionShareDistance = 20.0f;
 
         /*[Header("Behaviours Settings")]
         */
@@ -58,7 +60,7 @@ namespace AI.Scriptables
         public HumanHelpStateConfig humanHelpStateConfig;
 
 
-        private static string[][] validStateTransitions =
+        /*private static string[][] validStateTransitions =
         {
             // new [] {"FromState", "ToState1", "?ToQuestionableState2", "ToState3" }
             new[] {"Idle", "Contact", "Help"},
@@ -70,7 +72,7 @@ namespace AI.Scriptables
             new[] {"RearAttack", "Attack", "TakeCover", "Chase", "?Search", "Hide", "Help"},
             new[] {"Hide", "Idle", "Contact", "Attack", "TakeCover", "Chase", "Search", "RearAttack", "Hide", "Help"},
             new[] {"Help", "?Idle", "Attack", "TakeCover", "Chase", "Search", "RearAttack", "Hide"}
-        };
+        };*/
 
         public AiStateConfig[] GetStatesConfigs()
         {
@@ -89,7 +91,7 @@ namespace AI.Scriptables
         }
 
 
-        public bool IsValid()
+        /*public bool IsValid()
         {
             bool[] configStates =
             {
@@ -136,9 +138,9 @@ namespace AI.Scriptables
             }
 
             return true;
-        }
+        }*/
 
-        private static int GetStateIndex(string name)
+        /*private static int GetStateIndex(string name)
         {
             for (int i = 0; i < validStateTransitions.Length; i++)
             {
@@ -148,6 +150,6 @@ namespace AI.Scriptables
             }
 
             return -1;
-        }
+        }*/
     }
 }

@@ -2,6 +2,7 @@
 using SingleInstance;
 using UnityEngine;
 using Util;
+using Weapons.Classes;
 using Weapons.Classes.Parameters;
 using Weapons.Enums;
 using Weapons.Parameters;
@@ -11,7 +12,6 @@ namespace Weapons
     public class Weapon : MonoBehaviour
     {
         // invert x for left
-
         public Vector3 cameraOffsetToRight = new Vector3(0.35f, -0.47f, 0.60f);
 
         [Range(0, 9)] public int playerSlot = 1;
@@ -24,6 +24,7 @@ namespace Weapons
         public int ammoAmountIfPlayerAlreadyHasThisWeaponAndTriesToPickupIt;
 
         public WeaponParameters weaponParameters;
+        public SightFollowParameters sightFollowParameters;
 
         public Transform bullet;
         public BulletParameters bulletParameters;

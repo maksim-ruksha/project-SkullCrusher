@@ -15,6 +15,11 @@ namespace AI.Classes.States.Human
             name = "ContactState";
             stateConfig = (HumanContactStateConfig) config;
         }
+        
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanContactStateConfig) newConfig;
+        }
 
         public override void Update()
         {

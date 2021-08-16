@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e4c3312fe4463ea13d0988233d33f3, type: 3}
+  m_Name: Bot Config
+  m_EditorClassIdentifier: 
+  characterSpeed: 5
+  headRotationSpeed: 1.5
+  bodyRotationSpeed: 2
+  characterHeight: 2
+  aimingAccuracy: 0.7
+  recoilNeutralization: 0.5
+  predictTakingCoverClipAmmoMultiplier: 0.1
+  reloadTimeMultiplier: 1.75
+  visionAngle: 90
+  visionDistance: 50
+  visibleObjectsMask:
+    serializedVersion: 2
+    m_Bits: 1
+  canBeCommon: 1
+  canBeTank: 1
+  canBeTankSupporter: 1
+  canBeRearAttacker: 1
+  canBeMedic: 1
+  playerPositionShareTime: 10
+  playerPositionShareDistance: 20
+  humanIdleStateConfig:
+    type: 0
+    patrolSetRootTransform: {fileID: 0}
+  humanContactStateConfig:
+    instantContactPlayerVisibility: 0.95
+    contactStartPlayerVisibility: 0.25
+    contactLosePlayerVisibility: 0.15
+    contactTime: 2
+  humanAttackStateConfig:
+    contactLosePlayerVisibility: 0.1
+    playerFollowVisionDistancePart: 0.5
+    retreatDistance: 4.5
+  humanTakeCoverStateConfig:
+    angleThreshold: 60
+    coverUpdateInterval: 0
+  humanChaseStateConfig:
+    detectionPlayerVisibility: 0.2
+  humanSearchStateConfig:
+    detectionPlayerVisibility: 0.2
+    maxSearchPointDistance: 15
+    searchPointWaitTime: 2.5
+    coverChoiceLimiter: 64
+    maxDirectionDifference: 0.2
+    time: 60
+  humanRearAttackStateConfig:
+    maximumBypassRadius: 15
+    attackPlayerVisibility: 0.5
+    obstaclesMask:
+      serializedVersion: 2
+      m_Bits: 0
+    bypassPathSegments: 6
+  humanHideStateConfig:
+    healthThreshold: 0.1
+    healthRestoredThreshold: 0.4
+    hidingSpotChangePlayerVisibility: 0.3
+    hidingSpotAngleThreshold: 30
+    playerLookAngleThreshold: 25
+  humanHelpStateConfig:
+    healingVisionRadius: 20
+    addHealthAmount: 0.15
+    healingTime: 3
+    healingAbilityRestoreTime: 10

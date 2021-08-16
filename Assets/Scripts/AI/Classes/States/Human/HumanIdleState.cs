@@ -35,6 +35,12 @@ namespace AI.Classes.States.Human
             }
         }
 
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanIdleStateConfig) newConfig;
+        }
+
         public override void Update()
         {
             switch (stateConfig.type)

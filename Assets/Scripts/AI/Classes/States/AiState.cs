@@ -25,10 +25,11 @@ namespace AI.Classes.States
             
             player = bot.playerTransform;
             stateManager = bot.stateManager;
+            coverManager = bot.coverManager;
         }
-        
+
+        public abstract void Transit(AiStateConfig newConfig);
         public abstract void Update();
-        
         public abstract int TransitionCheck();
     }
 }

@@ -14,8 +14,15 @@ namespace AI.Classes.States.Human
             stateConfig = (HumanHelpStateConfig) config;
         }
 
+
+        public override void Transit(AiStateConfig newConfig)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void Update()
         {
+            // TODO: implement this
             throw new System.NotImplementedException();
         }
 

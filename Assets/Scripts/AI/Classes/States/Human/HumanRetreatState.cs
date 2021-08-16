@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using AI.Classes.States.Configs;
+﻿using AI.Classes.States.Configs;
 using AI.Classes.States.Configs.Human;
-using Level.Covers.Classes;
 using UnityEngine;
 
 namespace AI.Classes.States.Human
@@ -17,6 +14,11 @@ namespace AI.Classes.States.Human
             stateConfig = (HumanHideStateConfig) config;
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanHideStateConfig) newConfig;
+        }
+
         public override void Update()
         {
             float playerVisibility = bot.controller.GetPlayerVisibility();
@@ -29,6 +31,10 @@ namespace AI.Classes.States.Human
                     coverManager.GetNearestCoverPosition(position, playerDelta, stateConfig.hidingSpotAngleThreshold);
 
                 bot.controller.GoTo(coverPosition);
+                if (IsPlayerLooking())
+                {
+                    bot.Fire();
+                }
             }
 
             if (bot.controller.IsArrivedAtTargetPosition())
@@ -45,6 +51,13 @@ namespace AI.Classes.States.Human
             }
 
             return stateManager.GetStateIdByName("KeepCurrentState");
+        }
+
+        private bool IsPlayerLooking()
+        {
+            Vector3 playerDelta = player.transform.position - bot.transform.position;
+            return Vector3.Angle(bot.playerController.cameraTransform.forward, playerDelta) <
+                   stateConfig.playerLookAngleThreshold;
         }
     }
 }

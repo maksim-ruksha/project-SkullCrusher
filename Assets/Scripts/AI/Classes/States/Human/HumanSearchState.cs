@@ -29,6 +29,11 @@ namespace AI.Classes.States.Human
                 stateConfig.coverChoiceLimiter);
         }
 
+        public override void Transit(AiStateConfig newConfig)
+        {
+            stateConfig = (HumanSearchStateConfig) newConfig;
+        }
+
         public override void Update()
         {
             if (currentWaitTime <= 0)
