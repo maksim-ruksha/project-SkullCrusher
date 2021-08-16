@@ -144,6 +144,7 @@ namespace Character
         }
 
         // some juicy weapon animations
+        // пиздец какой-то
         private void SightFollowUpdate(Weapon weapon, bool isMain)
         {
             if (!weapon)
@@ -151,10 +152,14 @@ namespace Character
 
             int id = weapon.playerSlot;
             (Vector3, Vector3, Vector3) sightFollowInfo = weaponsSightFollowData[id];
-            SightFollowParameters sightFollowParameters = weapon.sightFollowParameters;
             
-            Vector3 targetPosition = controller.cameraTransform.TransformPoint(weapon.cameraOffsetToRight) -
-                                     controller.cameraTransform.position;
+            Vector3 weaponPreviousTargetPosition = sightFollowInfo.Item1;
+            Vector3 weaponCurrentDelta = sightFollowInfo.Item2;
+            Vector3 weaponOffset = sightFollowInfo.Item3;
+            
+            SightFollowParameters sightFollowParameters = weapon.sightFollowParameters;
+
+            Vector3 targetPosition = weapon.cameraOffsetToRight;
             if (!isMain)
             {
                 Vector3 cameraOffset = weapon.cameraOffsetToRight;
@@ -164,27 +169,28 @@ namespace Character
                                  controller.cameraTransform.position;
             }
 
-            //Vector3 moveDelta = controller.GetVelocity() / controller.moveSpeed;
             Vector3 moveDelta = lastVelocity / controller.moveSpeed;
-            //Vector3 delta = targetPosition - previousTargetPosition + moveDelta * sightFollowParameters.moveImpact;
-            Vector3 delta = targetPosition - sightFollowInfo.Item1 + moveDelta * sightFollowParameters.moveImpact;
-            delta = delta.normalized * Mathf.Min(sightFollowParameters.sightFollowMaxOffset, delta.magnitude);
+            Vector3 localMoveDelta = controller.cameraTransform.InverseTransformDirection(moveDelta);
+            Vector3 offset = targetPosition - sightFollowInfo.Item1 + localMoveDelta * sightFollowParameters.moveImpact;
+            offset = offset.normalized * Mathf.Min(sightFollowParameters.sightFollowMaxOffset, offset.magnitude);
 
-            Vector3 localDelta = controller.cameraTransform.InverseTransformDirection(delta);
-            localDelta = localDelta.normalized * Mathf.Min(sightFollowParameters.sightFollowMaxOffset, localDelta.magnitude);
 
-            sightFollowInfo.Item2 = Vector3.Lerp(sightFollowInfo.Item2, localDelta,
+            weaponCurrentDelta = Vector3.Lerp(sightFollowInfo.Item2, offset,
                 Time.deltaTime * sightFollowParameters.sightPositionFollowDecelerationSpeed);
 
-            sightFollowInfo.Item3 = Vector3.Lerp(sightFollowInfo.Item3, weapon.cameraOffsetToRight - sightFollowInfo.Item2,
+            weaponOffset = Vector3.Lerp(sightFollowInfo.Item3, weapon.cameraOffsetToRight - sightFollowInfo.Item2,
                 Time.deltaTime * sightFollowParameters.sightPositionFollowAccelerationSpeed);
 
             Quaternion targetRotation = controller.cameraTransform.rotation;
             weapon.transform.rotation = targetRotation;
             weapon.transform.localPosition = sightFollowInfo.Item3;
 
-            sightFollowInfo.Item1 = targetPosition;
-            
+            weaponPreviousTargetPosition = targetPosition;
+
+            sightFollowInfo.Item1 = weaponPreviousTargetPosition;
+            sightFollowInfo.Item2 = weaponCurrentDelta;
+            sightFollowInfo.Item3 = weaponOffset;
+
             weaponsSightFollowData[id] = sightFollowInfo;
             
             //previousTargetPosition = targetPosition;
