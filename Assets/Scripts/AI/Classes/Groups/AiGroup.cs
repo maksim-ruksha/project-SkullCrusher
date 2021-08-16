@@ -52,7 +52,6 @@ namespace AI.Classes.Groups
 
         public void TrackPlayer(AiBot whoTracked)
         {
-            // TODO: Track Player
             for (int i = 0; i < bots.Count; i++)
             {
                 AiBot bot = bots[i];
@@ -159,13 +158,6 @@ namespace AI.Classes.Groups
                 roles[max] = roles[i];
                 weights[i] = weightBuffer;
                 roles[i] = roleBuffer;
-            }
-
-            UnityEngine.Debug.Log($"GetPrioritizedRoles (bot count: {bots.Count}): ");
-            for (int i = 0; i < roles.Length; i++)
-            {
-                UnityEngine.Debug.Log(
-                    $"{i + 1}: {roles[i]} (weight = {weights[i]}) (bots with role: {roleCounts[(int) roles[i]]})");
             }
 
             return roles;

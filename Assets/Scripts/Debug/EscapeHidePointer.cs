@@ -5,8 +5,6 @@ namespace Debug
 {
     public class EscapeHidePointer : MonoBehaviour
     {
-        // TODO: implement
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))

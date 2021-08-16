@@ -63,7 +63,7 @@ namespace AI
             InitializeStates();
             if (initialWeapon)
                 EquipWeapon(initialWeapon);
-            
+
             // idk why, but bots rotate their heads at start
             // so we need this
             controller.LookAtDirection(controller.headTransform.forward);
@@ -124,7 +124,9 @@ namespace AI
 
         public void OnGroupPlayerTracked(float calculatedTime)
         {
-            currentTrackUpdateTime = calculatedTime;
+            // track player if no track is happening or if we got more fresh info
+            if (currentTrackUpdateTime <= 0 || calculatedTime < currentTrackUpdateTime)
+                currentTrackUpdateTime = calculatedTime;
         }
 
 

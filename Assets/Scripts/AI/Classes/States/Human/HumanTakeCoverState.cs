@@ -36,7 +36,7 @@ namespace AI.Classes.States.Human
         {
             if (currentCoverTime <= 0)
             {
-                Vector3 playerDirection = (player.position - bot.transform.position).normalized;
+                Vector3 playerDirection = (bot.GetPlayerLastPosition() - bot.transform.position).normalized;
                 Vector3 coverPosition = coverManager.GetNearestCoverPosition(bot.transform.position, playerDirection,
                     stateConfig.angleThreshold);
                 bot.controller.GoTo(coverPosition);
@@ -57,6 +57,12 @@ namespace AI.Classes.States.Human
                         bot.Fire();
                     }
                 }
+            }
+
+            float playerVisibility = bot.controller.GetPlayerVisibility();
+            if (playerVisibility > humanContactStateConfig.contactStartPlayerVisibility)
+            {
+                bot.TrackPlayer();
             }
         }
 
